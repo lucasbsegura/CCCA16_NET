@@ -1,11 +1,18 @@
-﻿namespace CCCA16_NET.Domain
+﻿namespace CCCA16_NET.Domain.Vo
 {
-    public class ValidateCpf
+    public class Cpf
     {
         private int FACTOR_FIRST_DIGIT { get { return 10; } }
         private int FACTOR_SECOND_DIGIT { get { return 11; } }
+        private string Value { get; set; }
 
-        public bool Validate(string RawCpf)
+        public Cpf(string cpf)
+        {
+            if (!this.Validate(cpf)) throw new Exception("Invalid Cpf");
+            this.Value = cpf;
+        }
+
+        private bool Validate(string RawCpf)
         {
             if (string.IsNullOrEmpty(RawCpf)) return false;
             var cpf = RemoveNonDigits(RawCpf);
@@ -40,6 +47,11 @@
         private int ExtractDigit(string cpf)
         {
             return Convert.ToInt32(cpf.Substring(cpf.Length - 2));
+        }
+
+        public string GetValue()
+        {
+            return this.Value;
         }
     }
 }
