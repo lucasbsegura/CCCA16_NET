@@ -14,9 +14,9 @@ namespace CCCA16_NET.Application.UseCase
         {
             var existingAccount = await _accountRepository.GetAccountByEmail(input.Email);
             if (existingAccount != null) throw new Exception("Account already exists");
-            var account = Account.Create(input.Name, input.Email, new Cpf(input.Cpf), input.CarPlate, input.IsPassenger, input.IsDriver);
+            var account = Account.Create(new Name(input.Name), new Email(input.Email), new Cpf(input.Cpf), input.CarPlate, input.IsPassenger, input.IsDriver);
             _accountRepository.SaveAccount(account);
-            _mailerGateway.Send(account.Email, "Welcome!", "You are registered!");
+            _mailerGateway.Send(account.Email.GetValue(), "Welcome!", "You are registered!");
             return account.AccountId;
         }
     }

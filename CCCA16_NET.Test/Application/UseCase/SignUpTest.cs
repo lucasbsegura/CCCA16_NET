@@ -36,8 +36,8 @@ namespace CCCA16_NET.Test.Application.UseCase
             Assert.True(outputSignUp != Guid.Empty);
             var getAccount = new GetAccount(_accountRepository);
             var outputGetAccount = await getAccount.Execute(outputSignUp);
-            Assert.True(input.Name == outputGetAccount.Name);
-            Assert.True(input.Email == outputGetAccount.Email);
+            Assert.True(input.Name == outputGetAccount.Name.GetValue());
+            Assert.True(input.Email == outputGetAccount.Email.GetValue());
             Assert.True(input.Cpf == outputGetAccount.Cpf.GetValue());
         }
 
@@ -57,8 +57,8 @@ namespace CCCA16_NET.Test.Application.UseCase
             Assert.True(outputSignUp != Guid.Empty);
             var getAccount = new GetAccount(_accountRepository);
             var outputGetAccount = await getAccount.Execute(outputSignUp);
-            Assert.True(input.Name == outputGetAccount.Name);
-            Assert.True(input.Email == outputGetAccount.Email);
+            Assert.True(input.Name == outputGetAccount.Name.GetValue());
+            Assert.True(input.Email == outputGetAccount.Email.GetValue());
             Assert.True(input.Cpf == outputGetAccount.Cpf.GetValue());
             Assert.True(input.CarPlate == outputGetAccount.CarPlate);
         }

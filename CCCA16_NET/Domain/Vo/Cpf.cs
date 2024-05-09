@@ -8,11 +8,11 @@
 
         public Cpf(string cpf)
         {
-            if (!this.Validate(cpf)) throw new Exception("Invalid Cpf");
+            if (!this.IsValid(cpf)) throw new Exception("Invalid Cpf");
             this.Value = cpf;
         }
 
-        private bool Validate(string RawCpf)
+        private bool IsValid(string RawCpf)
         {
             if (string.IsNullOrEmpty(RawCpf)) return false;
             var cpf = RemoveNonDigits(RawCpf);

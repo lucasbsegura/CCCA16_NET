@@ -8,8 +8,8 @@ namespace CCCA16_NET.Domain.Entity
     {
         [Column("account_id")]
         public Guid AccountId { get; }
-        public string Name { get; }
-        public string Email { get; }
+        public Name Name { get; }
+        public Email Email { get; }
         public Cpf Cpf { get; }
         [Column("car_plate")]
         public string CarPlate { get; }
@@ -18,13 +18,13 @@ namespace CCCA16_NET.Domain.Entity
         [Column("is_driver")]
         public bool IsDriver { get; }
 
-        private Account(Guid accountId, string name, string email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
+        private Account(Guid accountId, Name name, Email email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
         {
             //var validateCpf = new ValidateCpf();
-            var validateEmail = new ValidateEmail();
+            //var validateEmail = new ValidateEmail();
 
-            if (Regex.IsMatch(name, "/[a-zA-Z] [a-zA-Z]+/")) throw new Exception("Invalid name");
-            if (!validateEmail.IsValid(email)) throw new Exception("Invalid email");
+            //if (Regex.IsMatch(name, "/[a-zA-Z] [a-zA-Z]+/")) throw new Exception("Invalid name");
+            //if (!validateEmail.IsValid(email)) throw new Exception("Invalid email");
             //if (!validateCpf.Validate(cpf)) throw new Exception("Invalid cpf");
             if (isDriver && string.IsNullOrEmpty(carPlate)) throw new Exception("Invalid car plate");
 
@@ -37,13 +37,13 @@ namespace CCCA16_NET.Domain.Entity
             IsDriver = isDriver;
         }
 
-        public static Account Create(string name, string email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
+        public static Account Create(Name name, Email email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
         {
             Guid accountId = Guid.NewGuid();
             return new Account(accountId, name, email, cpf, carPlate, isPassenger, isDriver);
         }
 
-        public static Account Restore(Guid accountId, string name, string email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
+        public static Account Restore(Guid accountId, Name name, Email email, Cpf cpf, string carPlate, bool isPassenger, bool isDriver)
         {
             return new Account(accountId, name, email, cpf, carPlate, isPassenger, isDriver);
         }

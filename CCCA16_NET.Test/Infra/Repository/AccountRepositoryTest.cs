@@ -17,7 +17,7 @@ namespace CCCA16_NET.Test.Infra.Repository
         [Fact]
         public async void DeveSalvarUmRegistroNaTabelaAccountEConsultarPorId()
         {
-            var account = Account.Create("John Doe", $"john{_randonNumber.Next()}@gmail.com", new Cpf("87748248800"), "", true, false);
+            var account = Account.Create(new Name("John Doe"), new Email($"john{_randonNumber.Next()}@gmail.com"), new Cpf("87748248800"), "", true, false);
             var dbService = new DbService(FakeConfigurationBuilder.Do());
             dbService.Open();
             var accountRepository = new AccountRepository(dbService);
@@ -25,8 +25,8 @@ namespace CCCA16_NET.Test.Infra.Repository
             var accountById = await accountRepository.GetAccountById(account.AccountId);
             dbService.Close();
             Assert.True(accountById.AccountId == account.AccountId);
-            Assert.True(accountById.Name == account.Name);
-            Assert.True(accountById.Email == account.Email);
+            Assert.True(accountById.Name.GetValue() == account.Name.GetValue());
+            Assert.True(accountById.Email.GetValue() == account.Email.GetValue());
             Assert.True(accountById.Cpf.GetValue() == account.Cpf.GetValue());
         }
     }
