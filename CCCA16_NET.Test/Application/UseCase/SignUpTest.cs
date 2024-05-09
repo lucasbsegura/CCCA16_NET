@@ -38,7 +38,7 @@ namespace CCCA16_NET.Test.Application.UseCase
             var outputGetAccount = await getAccount.Execute(outputSignUp);
             Assert.True(input.Name == outputGetAccount.Name);
             Assert.True(input.Email == outputGetAccount.Email);
-            Assert.True(input.Cpf == outputGetAccount.Cpf);
+            Assert.True(input.Cpf == outputGetAccount.Cpf.GetValue());
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace CCCA16_NET.Test.Application.UseCase
             var outputGetAccount = await getAccount.Execute(outputSignUp);
             Assert.True(input.Name == outputGetAccount.Name);
             Assert.True(input.Email == outputGetAccount.Email);
-            Assert.True(input.Cpf == outputGetAccount.Cpf);
+            Assert.True(input.Cpf == outputGetAccount.Cpf.GetValue());
             Assert.True(input.CarPlate == outputGetAccount.CarPlate);
         }
 
@@ -87,7 +87,7 @@ namespace CCCA16_NET.Test.Application.UseCase
             {
                 Name = "John Doe",
                 Email = "john1.mail.com",
-                Cpf = "11111111111",
+                Cpf = "35535244058",
                 IsPassenger = true
             };
             var signUp = new SignUp(_accountRepository, _mailerGateway);
@@ -109,7 +109,7 @@ namespace CCCA16_NET.Test.Application.UseCase
             var signUp = new SignUp(_accountRepository, _mailerGateway);
             Func<Task> act = () => signUp.Execute(input);
             Exception exception = await Assert.ThrowsAsync<Exception>(act);
-            Assert.Equal("Invalid cpf", exception.Message);
+            Assert.Equal("Invalid Cpf", exception.Message);
         }
     }
 }

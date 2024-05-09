@@ -1,13 +1,22 @@
-﻿namespace CCCA16_NET.Domain.Entity
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CCCA16_NET.Domain.Entity
 {
     public class Ride
     {
+        [Column("ride_id")]
         public Guid RideId { get; }
+        [Column("passenger_id")]
         public string PassengerId { get; }
+        [Column("from_lat")]
         public double FromLat { get; }
+        [Column("from_long")]
         public double FromLong { get; }
+        [Column("to_lat")]
         public double ToLat { get; }
+        [Column("to_long")]
         public double ToLong { get; }
+        [Column("status")]
         public string Status { get; }
         public DateTime? Date { get; }
 

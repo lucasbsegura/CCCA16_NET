@@ -1,5 +1,7 @@
 ﻿using CCCA16_NET.Domain.Entity;
+using CCCA16_NET.Domain.Vo;
 using CCCA16_NET.Infra.Database;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CCCA16_NET.Infra.Repository
 {
@@ -26,15 +28,17 @@ namespace CCCA16_NET.Infra.Repository
 
         public async Task<Account> GetAccountById(Guid id)
         {
-            return await _connection.GetAsync<Account>("select account_id AS AccountId, name, email, cpf, car_plate AS CarPlate, is_passenger AS IsPassenger, is_driver AS IsDriver from cccat16.account where account_id = @id", new { id });
+            var accountDb = await _connection.GetAsync<AccountDb>("select account_id AS AccountId, name, email, cpf, car_plate AS CarPlate, is_passenger AS IsPassenger, is_driver AS IsDriver from cccat16.account where account_id = @id", new { id });
+            return Account.Restore(accountDb.AccountId, accountDb.Name, accountDb.Email, new Cpf(accountDb.Cpf), accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver);
         }
 
         public async void SaveAccount(Account account)
         {
+            var accountDb = new AccountDb(account.AccountId, account.Name, account.Email, account.Cpf.GetValue(), account.CarPlate, account.IsPassenger, account.IsDriver);
             var result = await _connection.EditData(
             "INSERT INTO cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) " +
             "VALUES (@AccountId, @Name, @Email, @Cpf, @CarPlate, @IsPassenger, @IsDriver)",
-            account);
+            accountDb);
         }
     }
 
@@ -62,5 +66,20 @@ namespace CCCA16_NET.Infra.Repository
         {
             _accounts.Add(account);
         }
+    }
+
+    public class AccountDb(Guid accountId, string name, string email, string cpf, string carPlate, bool isPassenger, bool isDriver)
+    {
+        [Column("account_id")]
+        public Guid AccountId { get; set; } = accountId;
+        public string Name { get; set; } = name;
+        public string Email { get; set; } = email;
+        public string Cpf { get; set; } = cpf;
+        [Column("car_plate")]
+        public string CarPlate { get; set; } = carPlate;
+        [Column("is_passenger")]
+        public bool IsPassenger { get; set; } = isPassenger;
+        [Column("is_driver")]
+        public bool IsDriver { get; set; } = isDriver;
     }
 }
