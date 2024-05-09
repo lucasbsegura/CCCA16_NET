@@ -68,18 +68,18 @@ namespace CCCA16_NET.Infra.Repository
         }
     }
 
-    public class AccountDb(Guid accountId, string name, string email, string cpf, string carPlate, bool isPassenger, bool isDriver)
+    public record AccountDb(Guid AccountId, string Name, string Email, string Cpf, string CarPlate, bool IsPassenger, bool IsDriver)
     {
         [Column("account_id")]
-        public Guid AccountId { get; set; } = accountId;
-        public string Name { get; set; } = name;
-        public string Email { get; set; } = email;
-        public string Cpf { get; set; } = cpf;
+        public Guid AccountId { get; } = AccountId;
+        public string Name { get; } = Name;
+        public string Email { get; } = Email;
+        public string Cpf { get; } = Cpf;
         [Column("car_plate")]
-        public string CarPlate { get; set; } = carPlate;
+        public string CarPlate { get; } = CarPlate;
         [Column("is_passenger")]
-        public bool IsPassenger { get; set; } = isPassenger;
+        public bool IsPassenger { get; } = IsPassenger;
         [Column("is_driver")]
-        public bool IsDriver { get; set; } = isDriver;
+        public bool IsDriver { get; } = IsDriver;
     }
 }

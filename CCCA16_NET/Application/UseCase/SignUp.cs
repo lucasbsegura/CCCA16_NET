@@ -5,15 +5,10 @@ using CCCA16_NET.Infra.Repository;
 
 namespace CCCA16_NET.Application.UseCase
 {
-    public class SignUp
+    public class SignUp(IAccountRepository accountRepository, IMailerGateway mailerGateway)
     {
-        private readonly IAccountRepository _accountRepository;
-        private readonly IMailerGateway _mailerGateway;
-        public SignUp(IAccountRepository accountRepository, IMailerGateway mailerGateway)
-        {
-            _accountRepository = accountRepository;
-            _mailerGateway = mailerGateway;
-        }
+        private readonly IAccountRepository _accountRepository = accountRepository;
+        private readonly IMailerGateway _mailerGateway = mailerGateway;
 
         public async Task<Guid> Execute(SignUpInput input)
         {
@@ -26,7 +21,7 @@ namespace CCCA16_NET.Application.UseCase
         }
     }
 
-    public class SignUpInput()
+    public class SignUpInput
     {
         public Guid AccountId { get; set; }
         public string Name { get; set; }
