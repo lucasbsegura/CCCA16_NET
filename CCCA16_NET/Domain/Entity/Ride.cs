@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CCCA16_NET.Domain.Vo;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CCCA16_NET.Domain.Entity
 {
@@ -17,7 +18,7 @@ namespace CCCA16_NET.Domain.Entity
         [Column("to_long")]
         public double ToLong { get; }
         [Column("status")]
-        public string Status { get; }
+        public RideStatus Status { get; set; }
         public DateTime? Date { get; }
 
         private Ride(Guid rideId, string passengerId, double fromLat, double fromLong, double toLat, double toLong, string status, DateTime date)
@@ -28,7 +29,7 @@ namespace CCCA16_NET.Domain.Entity
             this.FromLong = fromLong;
             this.ToLat = toLat;
             this.ToLong = toLong;
-            this.Status = status;
+            this.Status = RideStatusFactory.Create(this, status);
             this.Date = date;
         }
         public static Ride Create(string passengerId, double fromLat, double fromLong, double toLat, double toLong)

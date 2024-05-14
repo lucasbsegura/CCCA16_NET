@@ -1,8 +1,6 @@
 ﻿using CCCA16_NET.Application.UseCase;
-using CCCA16_NET.Infra.Database;
 using CCCA16_NET.Infra.Gateway;
 using CCCA16_NET.Infra.Repository;
-using CCCA16_NET.Test.Helper;
 
 namespace CCCA16_NET.Test.Application.UseCase
 {
@@ -60,7 +58,7 @@ namespace CCCA16_NET.Test.Application.UseCase
             Assert.True(input.Name == outputGetAccount.Name.GetValue());
             Assert.True(input.Email == outputGetAccount.Email.GetValue());
             Assert.True(input.Cpf == outputGetAccount.Cpf.GetValue());
-            Assert.True(input.CarPlate == outputGetAccount.CarPlate);
+            Assert.True(input.CarPlate == outputGetAccount.CarPlate.GetValue());
         }
 
         [Fact]

@@ -18,7 +18,7 @@ namespace CCCA16_NET.Test.Domain
             Assert.True(createRide.FromLong == fromLong);
             Assert.True(createRide.ToLat == toLat);
             Assert.True(createRide.ToLong == toLong);
-            Assert.True(createRide.Status == "requested");
+            Assert.True(createRide.Status.Value == "requested");
             Assert.True(createRide.Date != null);
             Assert.True(createRide.RideId != Guid.Empty);
         }
@@ -41,7 +41,7 @@ namespace CCCA16_NET.Test.Domain
             Assert.True(createRide.FromLong == fromLong);
             Assert.True(createRide.ToLat == toLat);
             Assert.True(createRide.ToLong == toLong);
-            Assert.True(createRide.Status == status);
+            Assert.True(createRide.Status.Value == status);
             Assert.True(createRide.Date == date);
         }
     }

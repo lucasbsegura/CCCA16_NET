@@ -29,12 +29,12 @@ namespace CCCA16_NET.Infra.Repository
         public async Task<Account> GetAccountById(Guid id)
         {
             var accountDb = await _connection.GetAsync<AccountDb>("select account_id AS AccountId, name, email, cpf, car_plate AS CarPlate, is_passenger AS IsPassenger, is_driver AS IsDriver from cccat16.account where account_id = @id", new { id });
-            return Account.Restore(accountDb.AccountId, new Name(accountDb.Name), new Email(accountDb.Email), new Cpf(accountDb.Cpf), accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver);
+            return Account.Restore(accountDb.AccountId, accountDb.Name, accountDb.Email, accountDb.Cpf, accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver);
         }
 
         public async void SaveAccount(Account account)
         {
-            var accountDb = new AccountDb(account.AccountId, account.Name.GetValue(), account.Email.GetValue(), account.Cpf.GetValue(), account.CarPlate, account.IsPassenger, account.IsDriver);
+            var accountDb = new AccountDb(account.AccountId, account.Name.GetValue(), account.Email.GetValue(), account.Cpf.GetValue(), account.CarPlate.GetValue(), account.IsPassenger, account.IsDriver);
             var result = await _connection.EditData(
             "INSERT INTO cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) " +
             "VALUES (@AccountId, @Name, @Email, @Cpf, @CarPlate, @IsPassenger, @IsDriver)",
