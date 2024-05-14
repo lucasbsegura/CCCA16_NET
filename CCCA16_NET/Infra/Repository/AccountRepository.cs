@@ -20,16 +20,16 @@ namespace CCCA16_NET.Infra.Repository
             _connection = connection;
         }
 
-        public async Task<Account> GetAccountByEmail(string email)
+        public async Task<Account?> GetAccountByEmail(string email)
         {
-            var account = await _connection.GetAsync<Account>("select * from cccat16.account where email = @email", new { email });
-            return account;
+            var accountDb = await _connection.GetAsync<AccountDb>("select account_id AS AccountId, name, email, cpf, car_plate AS CarPlate, is_passenger AS IsPassenger, is_driver AS IsDriver from cccat16.account where email = @email", new { email });
+            return accountDb != null ? Account.Restore(accountDb.AccountId, accountDb.Name, accountDb.Email, accountDb.Cpf, accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver) : null;
         }
 
-        public async Task<Account> GetAccountById(Guid id)
+        public async Task<Account?> GetAccountById(Guid id)
         {
             var accountDb = await _connection.GetAsync<AccountDb>("select account_id AS AccountId, name, email, cpf, car_plate AS CarPlate, is_passenger AS IsPassenger, is_driver AS IsDriver from cccat16.account where account_id = @id", new { id });
-            return Account.Restore(accountDb.AccountId, accountDb.Name, accountDb.Email, accountDb.Cpf, accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver);
+            return accountDb != null ? Account.Restore(accountDb.AccountId, accountDb.Name, accountDb.Email, accountDb.Cpf, accountDb.CarPlate, accountDb.IsPassenger, accountDb.IsDriver) : null;
         }
 
         public async void SaveAccount(Account account)

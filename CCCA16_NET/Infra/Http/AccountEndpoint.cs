@@ -1,4 +1,5 @@
-﻿using CCCA16_NET.Domain.Entity;
+﻿using CCCA16_NET.Application.UseCase;
+using CCCA16_NET.Domain.Entity;
 using CCCA16_NET.Infra.Repository;
 
 namespace CCCA16_NET.Infra.Http
@@ -10,9 +11,9 @@ namespace CCCA16_NET.Infra.Http
             app.MapGet("/Account/{accountId}", Get);
         }
 
-        public static async Task<Account> Get(Guid accountId, IAccountRepository accountRepository)
+        private static async Task<Account> Get(Guid accountId, IAccountRepository accountRepository)
         {
-            var getAccount = new Application.UseCase.GetAccount(accountRepository);
+            var getAccount = new GetAccount(accountRepository);
             return await getAccount.Execute(accountId);
         }
     }
