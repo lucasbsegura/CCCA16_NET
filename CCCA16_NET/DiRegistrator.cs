@@ -9,7 +9,7 @@ namespace CCCA16_NET
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IDbService, DbService>();
-            services.AddTransient<IAccountRepository, AccountRepositoryInMemory>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IMailerGateway, MailerGateway>();
         }
     }

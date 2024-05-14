@@ -3,13 +3,9 @@ using CCCA16_NET.Infra.Repository;
 
 namespace CCCA16_NET.Application.UseCase
 {
-    public class GetAccount
+    public class GetAccount(IAccountRepository accountRepository)
     {
-        private readonly IAccountRepository _accountRepository;
-        public GetAccount(IAccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
+        private readonly IAccountRepository _accountRepository = accountRepository;
 
         public async Task<Account> Execute(Guid accountId)
         {

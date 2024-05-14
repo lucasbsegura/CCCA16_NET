@@ -1,17 +1,15 @@
 ﻿using CCCA16_NET.Domain.Entity;
-using System.Data;
-using System.Reflection.Metadata.Ecma335;
 
 namespace CCCA16_NET.Domain.Vo
 {
-    public abstract class RideStatus
+    public abstract class RideStatus(Ride ride)
     {
         public abstract string Value { get; set; }
-        protected readonly Ride _ride;
-        protected RideStatus(Ride ride) { }
-        protected abstract void request();
-        protected abstract void accept();
-        protected abstract void start();
+        protected readonly Ride _ride = ride;
+
+        protected abstract void Request();
+        protected abstract void Accept();
+        protected abstract void Start();
     }
 
     public class RequestedStatus(Ride ride) : RideStatus(ride)
@@ -20,17 +18,17 @@ namespace CCCA16_NET.Domain.Vo
 
         public override string Value { get; set; } = "requested";
 
-        protected override void accept()
+        protected override void Accept()
         {
             throw new Exception("Invalid status");
         }
 
-        protected override void request()
+        protected override void Request()
         {
             this._ride.Status = new AcceptedStatus(this._ride);
         }
 
-        protected override void start()
+        protected override void Start()
         {
             throw new Exception("Invalid status");
         }
@@ -42,17 +40,17 @@ namespace CCCA16_NET.Domain.Vo
 
         public override string Value { get; set; } = "accepted";
 
-        protected override void accept()
+        protected override void Accept()
         {
             throw new Exception("Invalid status");
         }
 
-        protected override void request()
+        protected override void Request()
         {
             throw new Exception("Invalid status");
         }
 
-        protected override void start()
+        protected override void Start()
         {
             this._ride.Status = new InProgressStatus(this._ride);
         }
@@ -64,17 +62,17 @@ namespace CCCA16_NET.Domain.Vo
 
         public override string Value { get; set; } = "in_progress";
 
-        protected override void accept()
+        protected override void Accept()
         {
             throw new Exception("Invalid status");
         }
 
-        protected override void request()
+        protected override void Request()
         {
             throw new Exception("Invalid status");
         }
 
-        protected override void start()
+        protected override void Start()
         {
             throw new Exception("Invalid status");
         }

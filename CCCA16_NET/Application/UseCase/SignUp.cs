@@ -1,5 +1,4 @@
 ﻿using CCCA16_NET.Domain.Entity;
-using CCCA16_NET.Domain.Vo;
 using CCCA16_NET.Infra.Gateway;
 using CCCA16_NET.Infra.Repository;
 
