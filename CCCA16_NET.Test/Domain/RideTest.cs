@@ -7,17 +7,18 @@ namespace CCCA16_NET.Test.Domain
         [Fact]
         public void DeveConstruirRide()
         {
-            string passengerId = "1";
+            var passengerId = Guid.NewGuid();
+            var driverId = Guid.NewGuid();
             double fromLat = -27.584905257808835;
             double fromLong = -48.545022195325124;
             double toLat = -27.496887588317275;
             double toLong = -48.522234807851476;
-            var createRide = Ride.Create(passengerId, fromLat, fromLong, toLat, toLong);
+            var createRide = Ride.Create(passengerId, driverId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong);
             Assert.True(createRide.PassengerId == passengerId);
-            Assert.True(createRide.FromLat == fromLat);
-            Assert.True(createRide.FromLong == fromLong);
-            Assert.True(createRide.ToLat == toLat);
-            Assert.True(createRide.ToLong == toLong);
+            Assert.True(createRide.FromLat == (decimal)fromLat);
+            Assert.True(createRide.FromLong == (decimal)fromLong);
+            Assert.True(createRide.ToLat == (decimal)toLat);
+            Assert.True(createRide.ToLong == (decimal)toLong);
             Assert.True(createRide.Status.Value == "requested");
             Assert.True(createRide.Date != null);
             Assert.True(createRide.RideId != Guid.Empty);
@@ -26,21 +27,22 @@ namespace CCCA16_NET.Test.Domain
         [Fact]
         public void DeveRestaurarRide()
         {
-            Guid rideId = Guid.NewGuid();
+            var rideId = Guid.NewGuid();
             string status = "requested";
             DateTime date = DateTime.Now;
-            string passengerId = "1";
+            var passengerId = Guid.NewGuid();
+            var driverId = Guid.NewGuid();
             double fromLat = -27.584905257808835;
             double fromLong = -48.545022195325124;
             double toLat = -27.496887588317275;
             double toLong = -48.522234807851476;
-            var createRide = Ride.Restore(rideId, passengerId, fromLat, fromLong, toLat, toLong, status, date);
+            var createRide = Ride.Restore(rideId, passengerId, driverId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong, status, date);
             Assert.True(createRide.RideId == rideId);
             Assert.True(createRide.PassengerId == passengerId);
-            Assert.True(createRide.FromLat == fromLat);
-            Assert.True(createRide.FromLong == fromLong);
-            Assert.True(createRide.ToLat == toLat);
-            Assert.True(createRide.ToLong == toLong);
+            Assert.True(createRide.FromLat == (decimal)fromLat);
+            Assert.True(createRide.FromLong == (decimal)fromLong);
+            Assert.True(createRide.ToLat == (decimal)toLat);
+            Assert.True(createRide.ToLong == (decimal)toLong);
             Assert.True(createRide.Status.Value == status);
             Assert.True(createRide.Date == date);
         }

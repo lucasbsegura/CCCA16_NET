@@ -7,6 +7,7 @@ var app = builder.Build();
 
 AccountEndpoint.Create(app);
 PingEndpoint.Create(app);
+RideEndpoint.Create(app);
 SignUpEndpoint.Create(app);
 
 app.Run();
