@@ -13,6 +13,7 @@ namespace CCCA16_NET.Application.UseCase
             var account = await this._accountRepository.GetAccountById(input.DriverId);
             if (!account.IsDriver) throw new Exception("Account is not from a driver");
             var ride = await this._rideRepository.GetRideById(input.RideId);
+            if (ride == null) throw new Exception("there is no ride");
             ride.Accept(input.DriverId);
             this._rideRepository.UpdateRide(ride);
             return ride.RideId;
