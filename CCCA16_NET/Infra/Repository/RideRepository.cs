@@ -9,9 +9,9 @@ namespace CCCA16_NET.Infra.Repository
     public interface IRideRepository
     {
         void SaveRide(Ride ride);
-        Task<bool> HasActiveRideByPassengerId(string email);
+        Task<bool> HasActiveRideByPassengerId(Guid passenderId);
         Task<Ride> GetRideById(Guid id);
-        
+        void UpdateRide(Ride ride);
     }
 
 
@@ -28,18 +28,27 @@ namespace CCCA16_NET.Infra.Repository
             return await _connection.GetAsync<Ride>("select ride_id AS RideId, passenger_id AS PassengerId, driver_id AS DriverId, from_lat AS FromLat, from_long AS FromLong, to_lat AS ToLat, to_long AS ToLong, status, date from cccat16.ride where ride_id = @id", new { id });
         }
 
-        public async Task<bool> HasActiveRideByPassengerId(string passengerId)
+        public async Task<bool> HasActiveRideByPassengerId(Guid passengerId)
         {
-            var ride = await _connection.GetAsync<Ride>("select * from cccat16.ride where passenger_id = @passengerId and status <> 'completed'", new { passengerId });
+            var ride = await _connection.GetAsync<Ride>("select ride_id AS RideId, passenger_id AS PassengerId, driver_id AS DriverId, from_lat AS FromLat, from_long AS FromLong, to_lat AS ToLat, to_long AS ToLong, status, date from cccat16.ride where passenger_id = @passengerId and status <> 'completed'", new { passengerId });
             return ride != null;
         }
 
         public async void SaveRide(Ride ride)
         {
+            var rideDb = new RideDb(ride.RideId, ride.PassengerId, ride.DriverId, ride.FromLat, ride.FromLong, ride.ToLat, ride.ToLong, ride.Status.Value, ride.Date);
             var result = await _connection.EditData(
             "INSERT INTO cccat16.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) " +
             "VALUES (@RideId, @PassengerId, @FromLat, @FromLong, @ToLat, @ToLong, @Status, @Date)",
-            ride);
+            rideDb);
+        }
+
+        public async void UpdateRide(Ride ride)
+        {
+            var rideDb = new RideDb(ride.RideId, ride.PassengerId, ride.DriverId, ride.FromLat, ride.FromLong, ride.ToLat, ride.ToLong, ride.Status.Value, ride.Date);
+            var result = await _connection.EditData(
+            "UPDATE cccat16.ride SET status = @Status, driver_id = @DriverId where ride_id = @RideId",
+            rideDb);
         }
     }
 

@@ -8,12 +8,11 @@ namespace CCCA16_NET.Test.Domain
         public void DeveConstruirRide()
         {
             var passengerId = Guid.NewGuid();
-            var driverId = Guid.NewGuid();
             double fromLat = -27.584905257808835;
             double fromLong = -48.545022195325124;
             double toLat = -27.496887588317275;
             double toLong = -48.522234807851476;
-            var createRide = Ride.Create(passengerId, driverId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong);
+            var createRide = Ride.Create(passengerId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong);
             Assert.True(createRide.PassengerId == passengerId);
             Assert.True(createRide.FromLat == (decimal)fromLat);
             Assert.True(createRide.FromLong == (decimal)fromLong);

@@ -10,7 +10,7 @@ namespace CCCA16_NET.Domain.Entity
         [Column("passenger_id")]
         public Guid PassengerId { get; }
         [Column("driver_id")]
-        public Guid DriverId { get; }
+        public Guid DriverId { get; set;  }
         [Column("from_lat")]
         public decimal FromLat { get; }
         [Column("from_long")]
@@ -35,17 +35,33 @@ namespace CCCA16_NET.Domain.Entity
             this.Status = RideStatusFactory.Create(this, status);
             this.Date = date;
         }
-        public static Ride Create(Guid passengerId, Guid driverId, decimal fromLat, decimal fromLong, decimal toLat, decimal toLong)
+        public static Ride Create(Guid passengerId, decimal fromLat, decimal fromLong, decimal toLat, decimal toLong)
         {
             var rideId = Guid.NewGuid();
             var status = "requested";
             var date = DateTime.Now;
-            return new Ride(rideId, passengerId, driverId, fromLat, fromLong, toLat, toLong, status, date);
+            return new Ride(rideId, passengerId, Guid.Empty, fromLat, fromLong, toLat, toLong, status, date);
         }
 
         public static Ride Restore(Guid rideId, Guid passengerId, Guid driverId, decimal fromLat, decimal fromLong, decimal toLat, decimal toLong, string status, DateTime date)
         {
             return new Ride(rideId, passengerId, driverId, fromLat, fromLong, toLat, toLong, status, date);
+        }
+
+        public void Accept(Guid driverId)
+        {
+            this.Status.Accept();
+            this.DriverId = driverId;
+        }
+
+        public void Start()
+        {
+            this.Status.Start();
+        }
+
+        public string GetStatus()
+        {
+            return this.Status.Value;
         }
     }
 }
