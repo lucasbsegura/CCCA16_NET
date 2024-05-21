@@ -1,5 +1,4 @@
 ﻿using CCCA16_NET.Infra.Repository;
-using System;
 
 namespace CCCA16_NET.Application.UseCase
 {

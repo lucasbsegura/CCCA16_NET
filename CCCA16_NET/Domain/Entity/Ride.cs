@@ -1,5 +1,4 @@
 ﻿using CCCA16_NET.Domain.Vo;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CCCA16_NET.Domain.Entity
 {

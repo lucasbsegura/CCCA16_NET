@@ -1,8 +1,6 @@
 ﻿using CCCA16_NET.Domain.Entity;
-using CCCA16_NET.Domain.Vo;
 using CCCA16_NET.Infra.Database;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Common;
 
 namespace CCCA16_NET.Infra.Repository
 {
