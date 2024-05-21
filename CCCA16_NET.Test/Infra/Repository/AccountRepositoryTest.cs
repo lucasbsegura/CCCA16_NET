@@ -18,6 +18,7 @@ namespace CCCA16_NET.Test.Infra.Repository
         public async void DeveSalvarUmRegistroNaTabelaAccountEConsultarPorId()
         {
             var account = Account.Create("John Doe", $"john{_randonNumber.Next()}@gmail.com", "87748248800", "", true, false);
+
             var dbService = new DbService(FakeConfigurationBuilder.Do());
             dbService.Open();
             var accountRepository = new AccountRepository(dbService);
