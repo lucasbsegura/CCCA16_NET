@@ -12,6 +12,7 @@ namespace CCCA16_NET.Infra.Http
             ride.MapPost("/Request", Request);
             ride.MapPost("/Accept", Accept);
             ride.MapPost("/Start", Start);
+            ride.MapPost("/UpdatePosition", UpdatePosition);
         }
 
         private static async Task<GetRideOutput> Get(Guid rideId, IAccountRepository accountRepository, IRideRepository rideRepository)
@@ -36,7 +37,12 @@ namespace CCCA16_NET.Infra.Http
         {
             var startRide = new StartRide(rideRepository);
             return await startRide.Execute(input);
+        }
 
+        private static void UpdatePosition(UpdatePositionInput input, IRideRepository rideRepository, IPositionRepository positionRepository)
+        {
+            var updatePosition = new UpdatePosition(rideRepository, positionRepository);
+            updatePosition.Execute(input);
         }
     }
 }

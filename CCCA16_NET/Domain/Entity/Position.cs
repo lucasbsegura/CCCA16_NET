@@ -12,14 +12,14 @@ namespace CCCA16_NET.Domain.Entity
         public Coord Coord { get; } = coord;
         public DateTime Date { get; } = date;
 
-        public static Position Create(Guid rideId, long latitude, long longitude)
+        public static Position Create(Guid rideId, decimal latitude, decimal longitude)
         {
             var positionId = Guid.NewGuid();
             var date = DateTime.Now;
             return new Position(positionId, rideId, new Coord(latitude, longitude), date);
         }
 
-        public static Position Restore(Guid positionId, Guid rideId, long latitude, long longitude, DateTime date)
+        public static Position Restore(Guid positionId, Guid rideId, decimal latitude, decimal longitude, DateTime date)
         {
             return new Position(positionId, rideId, new Coord(latitude, longitude), date);
         }

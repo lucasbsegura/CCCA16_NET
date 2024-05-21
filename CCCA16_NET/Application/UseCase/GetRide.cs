@@ -17,7 +17,7 @@ namespace CCCA16_NET.Application.UseCase
         {
             var ride = await this._rideRepository.GetRideById(rideId);
             var passanger = await this._accountRepository.GetAccountById(ride.PassengerId);
-            if (ride.DriverId == null || ride.DriverId == Guid.Empty)
+            if (ride.DriverId == Guid.Empty)
             {
                 return new GetRideOutput(ride.RideId, ride.PassengerId, ride.Segment.From.GetLatitude(), ride.Segment.From.GetLongitude(), ride.Segment.To.GetLatitude(), ride.Segment.To.GetLongitude(), passanger.Name.GetValue(), passanger.Email.GetValue(), "", "");
             }

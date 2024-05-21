@@ -10,6 +10,7 @@ namespace CCCA16_NET
         {
             services.AddScoped<IDbService, DbService>();
             services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IPositionRepository, PositionRepository>();
             services.AddTransient<IRideRepository, RideRepository>();
             services.AddTransient<IMailerGateway, MailerGateway>();
         }
