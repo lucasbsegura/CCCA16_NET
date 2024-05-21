@@ -19,10 +19,10 @@ namespace CCCA16_NET.Application.UseCase
             var passanger = await this._accountRepository.GetAccountById(ride.PassengerId);
             if (ride.DriverId == null || ride.DriverId == Guid.Empty)
             {
-                return new GetRideOutput(ride.RideId, ride.PassengerId, ride.FromLat, ride.FromLat, ride.ToLat, ride.ToLong, passanger.Name.GetValue(), passanger.Email.GetValue(), "", "");
+                return new GetRideOutput(ride.RideId, ride.PassengerId, ride.Segment.From.GetLatitude(), ride.Segment.From.GetLongitude(), ride.Segment.To.GetLatitude(), ride.Segment.To.GetLongitude(), passanger.Name.GetValue(), passanger.Email.GetValue(), "", "");
             }
             var driver = await this._accountRepository.GetAccountById(ride.DriverId);
-            return new GetRideOutput(ride.RideId, ride.PassengerId, ride.FromLat, ride.FromLat, ride.ToLat, ride.ToLong, passanger.Name.GetValue(), passanger.Email.GetValue(), driver.Name.GetValue(), driver.Email.GetValue());
+            return new GetRideOutput(ride.RideId, ride.PassengerId, ride.Segment.From.GetLatitude(), ride.Segment.From.GetLongitude(), ride.Segment.To.GetLatitude(), ride.Segment.To.GetLongitude(), passanger.Name.GetValue(), passanger.Email.GetValue(), driver.Name.GetValue(), driver.Email.GetValue());
         }
     }
 

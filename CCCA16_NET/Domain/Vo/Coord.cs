@@ -5,11 +5,11 @@ namespace CCCA16_NET.Domain.Vo
     public class Coord
     {
         [Column("lat")]
-        private long Latitude { get; set; }
+        private decimal Latitude { get; set; }
         [Column("long")]
-        private long Longitude { get; set; }
+        private decimal Longitude { get; set; }
 
-        public Coord(long latitude, long longitude) 
+        public Coord(decimal latitude, decimal longitude) 
         {
             if (latitude < -90 || latitude > 90) throw new Exception("Invalid latitude");
             if (longitude < -180 || longitude > 180) throw new Exception("Invalid longitude");
@@ -17,7 +17,7 @@ namespace CCCA16_NET.Domain.Vo
             this.Longitude = longitude;
         }
 
-        public long GetLatitude() { return this.Latitude; }
-        public long GetLongitude() { return this.Longitude; }
+        public decimal GetLatitude() { return this.Latitude; }
+        public decimal GetLongitude() { return this.Longitude; }
     }
 }

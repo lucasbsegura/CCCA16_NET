@@ -14,10 +14,10 @@ namespace CCCA16_NET.Test.Domain
             double toLong = -48.522234807851476;
             var createRide = Ride.Create(passengerId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong);
             Assert.True(createRide.PassengerId == passengerId);
-            Assert.True(createRide.FromLat == (decimal)fromLat);
-            Assert.True(createRide.FromLong == (decimal)fromLong);
-            Assert.True(createRide.ToLat == (decimal)toLat);
-            Assert.True(createRide.ToLong == (decimal)toLong);
+            Assert.True(createRide.Segment.From.GetLatitude() == (decimal)fromLat);
+            Assert.True(createRide.Segment.From.GetLongitude() == (decimal)fromLong);
+            Assert.True(createRide.Segment.To.GetLatitude() == (decimal)toLat);
+            Assert.True(createRide.Segment.To.GetLongitude() == (decimal)toLong);
             Assert.True(createRide.Status.Value == "requested");
             Assert.True(createRide.Date != null);
             Assert.True(createRide.RideId != Guid.Empty);
@@ -38,10 +38,10 @@ namespace CCCA16_NET.Test.Domain
             var createRide = Ride.Restore(rideId, passengerId, driverId, (decimal)fromLat, (decimal)fromLong, (decimal)toLat, (decimal)toLong, status, date);
             Assert.True(createRide.RideId == rideId);
             Assert.True(createRide.PassengerId == passengerId);
-            Assert.True(createRide.FromLat == (decimal)fromLat);
-            Assert.True(createRide.FromLong == (decimal)fromLong);
-            Assert.True(createRide.ToLat == (decimal)toLat);
-            Assert.True(createRide.ToLong == (decimal)toLong);
+            Assert.True(createRide.Segment.From.GetLatitude() == (decimal)fromLat);
+            Assert.True(createRide.Segment.From.GetLongitude() == (decimal)fromLong);
+            Assert.True(createRide.Segment.To.GetLatitude() == (decimal)toLat);
+            Assert.True(createRide.Segment.To.GetLongitude() == (decimal)toLong);
             Assert.True(createRide.Status.Value == status);
             Assert.True(createRide.Date == date);
         }

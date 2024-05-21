@@ -5,33 +5,19 @@ namespace CCCA16_NET.Domain.Entity
 {
     public class Ride
     {
-        [Column("ride_id")]
         public Guid RideId { get; }
-        [Column("passenger_id")]
         public Guid PassengerId { get; }
-        [Column("driver_id")]
         public Guid DriverId { get; set;  }
-        [Column("from_lat")]
-        public decimal FromLat { get; }
-        [Column("from_long")]
-        public decimal FromLong { get; }
-        [Column("to_lat")]
-        public decimal ToLat { get; }
-        [Column("to_long")]
-        public decimal ToLong { get; }
-        [Column("status")]
+        public Segment Segment { get; set; }
         public RideStatus Status { get; set; }
         public DateTime? Date { get; }
 
-        private Ride(Guid rideId, Guid passengerId, Guid driverId, decimal fromLat, decimal fromLong, decimal toLat, decimal toLong, string status, DateTime date)
+        private Ride(Guid rideId, Guid passengerId, Guid driverId, Segment segment, string status, DateTime date)
         {
             this.RideId = rideId;
             this.PassengerId = passengerId;
             this.DriverId = driverId;
-            this.FromLat = fromLat;
-            this.FromLong = fromLong;
-            this.ToLat = toLat;
-            this.ToLong = toLong;
+            this.Segment = segment;
             this.Status = RideStatusFactory.Create(this, status);
             this.Date = date;
         }
@@ -40,12 +26,13 @@ namespace CCCA16_NET.Domain.Entity
             var rideId = Guid.NewGuid();
             var status = "requested";
             var date = DateTime.Now;
-            return new Ride(rideId, passengerId, Guid.Empty, fromLat, fromLong, toLat, toLong, status, date);
+            var ride = new Ride(rideId, passengerId, Guid.Empty, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date);
+            return ride;
         }
 
         public static Ride Restore(Guid rideId, Guid passengerId, Guid driverId, decimal fromLat, decimal fromLong, decimal toLat, decimal toLong, string status, DateTime date)
         {
-            return new Ride(rideId, passengerId, driverId, fromLat, fromLong, toLat, toLong, status, date);
+            return new Ride(rideId, passengerId, driverId, new Segment(new Coord(fromLat, fromLong), new Coord(toLat, toLong)), status, date);
         }
 
         public void Accept(Guid driverId)
@@ -62,6 +49,26 @@ namespace CCCA16_NET.Domain.Entity
         public string GetStatus()
         {
             return this.Status.Value;
+        }
+
+        public decimal GetFromLat()
+        {
+            return this.Segment.From.GetLatitude();
+        }
+
+        public decimal GetFromLong()
+        {
+            return this.Segment.From.GetLongitude();
+        }
+
+        public decimal GetToLat()
+        {
+            return this.Segment.To.GetLatitude();
+        }
+
+        public decimal GetToLong()
+        {
+            return this.Segment.To.GetLongitude();
         }
     }
 }

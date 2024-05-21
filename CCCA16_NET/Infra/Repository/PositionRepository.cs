@@ -23,16 +23,16 @@ namespace CCCA16_NET.Infra.Repository
         }
     }
 
-    public class PositionDb(Guid positionId, Guid rideId, long latitude, long longitude, DateTime date)
+    public class PositionDb(Guid positionId, Guid rideId, decimal latitude, decimal longitude, DateTime date)
     {
         [Column("position_id")]
         public Guid PositionId { get; } = positionId;
         [Column("ride_id")]
         public Guid RideId { get; } = rideId;
         [Column("lat")]
-        public long Latitude { get; } = latitude;
+        public decimal Latitude { get; } = latitude;
         [Column("long")]
-        public long Longitude { get; } = longitude;
+        public decimal Longitude { get; } = longitude;
         public DateTime Date { get; } = date;
     }
 }

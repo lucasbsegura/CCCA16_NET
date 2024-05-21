@@ -7,10 +7,11 @@ namespace CCCA16_NET.Infra.Http
     {
         public static void Create(WebApplication app)
         {
-            app.MapGet("/Ride/{rideId}", Get);
-            app.MapPost("/Ride/Request", Request);
-            app.MapPost("/Ride/Accept", Accept);
-            app.MapPost("/Ride/Start", Start);
+            RouteGroupBuilder ride = app.MapGroup("/Ride");
+            ride.MapGet("/{rideId}", Get);
+            ride.MapPost("/Request", Request);
+            ride.MapPost("/Accept", Accept);
+            ride.MapPost("/Start", Start);
         }
 
         private static async Task<GetRideOutput> Get(Guid rideId, IAccountRepository accountRepository, IRideRepository rideRepository)
