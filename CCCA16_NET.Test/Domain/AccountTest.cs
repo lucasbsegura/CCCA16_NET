@@ -1,5 +1,4 @@
 ﻿using CCCA16_NET.Domain.Entity;
-using CCCA16_NET.Domain.Vo;
 
 namespace CCCA16_NET.Test.Domain
 {
